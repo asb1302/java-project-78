@@ -7,6 +7,6 @@ public final class Required implements Constraint {
             return false;
         }
 
-        return !(value instanceof String) || !value.equals("");
+        return !(value instanceof String && ((String) value).isEmpty());
     }
 }
