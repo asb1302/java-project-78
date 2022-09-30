@@ -41,7 +41,6 @@ public class MapSchemaTest {
 
         MapSchema schema = v.map();
 
-        // shape - позволяет описывать валидацию для значений объекта Map по ключам.
         Map<String, BaseSchema> schemas = new HashMap<>();
 
         schemas.put("name", v.string().required());
@@ -68,5 +67,12 @@ public class MapSchemaTest {
         human4.put("name", "Valya");
         human4.put("age", NUMBER_2);
         assertThat(schema.isValid(human4)).isEqualTo(false);
+
+        schemas.put("name", v.string().required().contains("ya"));
+
+        Map<String, Object> human5 = new HashMap<>();
+        human5.put("name", "Valya");
+        human5.put("age", NUMBER_1);
+        assertThat(schema.isValid(human5)).isEqualTo(true);
     }
 }

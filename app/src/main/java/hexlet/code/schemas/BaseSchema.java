@@ -1,7 +1,6 @@
 package hexlet.code.schemas;
 
 import hexlet.code.constraints.Constraint;
-import hexlet.code.constraints.Required;
 
 import java.util.ArrayList;
 
@@ -50,16 +49,5 @@ public abstract class BaseSchema {
         }
 
         return true;
-    }
-
-    /**
-     * Condition that the value is not empty.
-     *
-     * @return BaseSchema
-     */
-    protected BaseSchema required() {
-        this.addConstraint(new Required());
-
-        return this;
     }
 }
