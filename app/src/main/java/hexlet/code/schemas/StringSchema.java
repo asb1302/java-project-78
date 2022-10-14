@@ -1,10 +1,5 @@
 package hexlet.code.schemas;
 
-import hexlet.code.constraints.Contains;
-import hexlet.code.constraints.IsString;
-import hexlet.code.constraints.MinLength;
-import hexlet.code.constraints.Required;
-
 public final class StringSchema extends BaseSchema implements Schema {
     public StringSchema required() {
         this.addConstraint(new Required());
@@ -26,5 +21,46 @@ public final class StringSchema extends BaseSchema implements Schema {
         this.addConstraint(new MinLength(min));
 
         return this;
+    }
+
+    private static final class IsString implements Constraint {
+        public boolean validate(Object value) {
+            if (value == null) {
+                return true;
+            }
+
+            return value instanceof String;
+        }
+    }
+
+    private static final class Required implements Constraint {
+        public boolean validate(Object value) {
+            if (value == null) {
+                return false;
+            }
+
+            return !(value instanceof String && ((String) value).isEmpty());
+        }
+    }
+
+    private static final class Contains implements Constraint {
+        private final String substring;
+        Contains(String substr) {
+            this.substring = substr;
+        }
+        public boolean validate(Object value) {
+            return ((String) value).contains(this.substring);
+        }
+    }
+
+    private static final class MinLength implements Constraint {
+        private final int minLength;
+
+        MinLength(int min) {
+            this.minLength = min;
+        }
+        public boolean validate(Object value) {
+            return ((String) value).length() >= this.minLength;
+        }
     }
 }
